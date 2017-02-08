@@ -1,4 +1,11 @@
 class Coupon < ApplicationRecord
+  # t.string :code
+  # t.belongs_to :deal
+  # t.boolean :actual, default: false, null: false
+  # t.integer :user_id
+  #
+  # t.timestamps
+
   belongs_to :deal
 
   after_initialize :init
