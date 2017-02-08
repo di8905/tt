@@ -10,6 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20170207134657) do
+
+  create_table "codes", force: :cascade do |t|
+    t.string   "code"
+    t.boolean  "active",     default: true, null: false
+    t.integer  "coupon_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["coupon_id"], name: "index_codes_on_coupon_id"
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "deal_id"
+    t.boolean  "actual",     default: false, null: false
+    t.integer  "user_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["deal_id"], name: "index_coupons_on_deal_id"
+  end
+
+  create_table "deals", force: :cascade do |t|
+    t.integer  "max_coupon_limit",                 null: false
+    t.integer  "min_coupon_limit"
+    t.boolean  "succeed",          default: false, null: false
+    t.string   "type"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "duration"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
 
 end

@@ -1,10 +1,27 @@
 class Coupon < ApplicationRecord
-  has_one :code
   belongs_to :deal
 
-  validates :code, presence: true
+  after_initialize :init
 
-  def valid?
-    self.code.active && self.deal.held
+  validates :code, presence: true, uniqueness: true
+
+  scope :available, -> { where(user_id: nil) }
+  scope :purchased, -> { where.not(user_id: nil)}
+
+  def init
+    self.code ||= generate_code
+  end
+
+  def actual?
+    self.deal.succeed
+  end
+
+  private
+
+  def generate_code
+    begin
+      code = rand(100000..999999)
+    end while Coupon.find_by_code(code)
+    code
   end
 end

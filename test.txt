@@ -1,0 +1,3 @@
+codepack = [1, 2, 3]
+
+d = Deal.new(codepack: codepack, start_time: Time.now, duration: 1.day)
